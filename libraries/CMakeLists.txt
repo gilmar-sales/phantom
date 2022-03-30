@@ -1,0 +1,7 @@
+add_subdirectory(assimp)
+add_subdirectory(ct-ecs)
+add_subdirectory(fmt)
+add_subdirectory(glbinding)
+add_subdirectory(glfw)
+add_subdirectory(glm)
+add_subdirectory(imgui)
