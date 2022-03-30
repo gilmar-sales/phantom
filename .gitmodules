@@ -18,5 +18,5 @@
 	url = https://github.com/glfw/glfw.git
 [submodule "libraries/imgui"]
 	path = libraries/imgui
-	url = https://github.com/ocornut/imgui.git
+	url = https://github.com/gilmarxd/imgui.git
 	branch = docking
