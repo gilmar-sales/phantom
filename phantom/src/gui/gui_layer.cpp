@@ -24,9 +24,7 @@ void GUILayer::on_attach()
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
-
-	// io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
-	// io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
+	io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleViewports;
 
 	// Setup Dear ImGui style
 	ImGuiStyle& style = ImGui::GetStyle();
@@ -37,13 +35,13 @@ void GUILayer::on_attach()
 	style.WindowBorderSize = 0.0f;
 	style.WindowPadding = {0.0f, 0.0f};
 
-	style.GrabRounding = 2.0f;
+	style.GrabRounding = 0.0f;
 
 	style.AntiAliasedLines = true;
 	style.AntiAliasedFill = true;
 	style.IndentSpacing = 22;
 
-	style.ChildRounding = 3.0f;
+	style.ChildRounding = 0.0f;
 	style.ChildBorderSize = 0.0f;
 
 	style.ScrollbarRounding = 0.0f;
@@ -65,7 +63,7 @@ void GUILayer::on_attach()
 
 	StylePhantomDark();
 
-	GLFWwindow* native_window = (GLFWwindow*)(window->get_native_window());
+	auto* native_window = (GLFWwindow*)(window->get_native_window());
 
 	// Setup Platform/Renderer bindings
 	ImGui_ImplGlfw_InitForOpenGL(native_window, true);

@@ -27,8 +27,8 @@ void Window::update()
 {
     context->swap_buffers();
 
-//    glfwWaitEvents();
-     glfwPollEvents();
+    glfwWaitEvents();
+//     glfwPollEvents();
 }
 
 void Window::close()

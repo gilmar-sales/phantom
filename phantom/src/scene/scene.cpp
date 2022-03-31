@@ -9,6 +9,7 @@ void Scene::update()
     Log::core_info("scene update");
     m_manager.update();
 }
+
 void Scene::on_editor_render(shared<SceneRenderer> renderer, double ts)
 {
 
