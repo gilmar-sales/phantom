@@ -25,6 +25,7 @@ public:
 
     void begin();
     void end();
+    void configure_style();
 
     void block_events(bool block) { m_block_events = block; }
 };
