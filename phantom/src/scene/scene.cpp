@@ -2,7 +2,13 @@
 
 PH_NAMESPACE_BEGIN
 
-Scene::Scene(): m_manager(1024u) {}
+Scene::Scene(): m_manager(1024u) {
+    auto camera = m_manager.create_entity();
+
+    m_manager.add_component(camera, NameComponent{"Main Camera"});
+    m_manager.add_tag<MainCameraTag>(camera);
+    m_manager.add_component(camera, TransformComponent{});
+}
 
 void Scene::update()
 {
