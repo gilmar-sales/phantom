@@ -13,6 +13,7 @@
 [submodule "libraries/ct-ecs"]
 	path = libraries/ct-ecs
 	url = https://github.com/gilmarxd/ct-ecs.git
+	branch = master
 [submodule "libraries/glfw"]
 	path = libraries/glfw
 	url = https://github.com/glfw/glfw.git
