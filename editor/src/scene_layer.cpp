@@ -20,12 +20,16 @@ void SceneLayer::on_update()
 
 void SceneLayer::on_gui_render()
 {
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.0f, 0.0f});
     ImGui::Begin(ICON_BTSP_CAMERAREELS " Scene");
-    ImVec2 avail_size = ImGui::GetContentRegionAvail();
-    frame->resize(avail_size.x, avail_size.y);
-    frame->unbind();
-    ImGui::Image((void *)(intptr_t)frame->get_color_attachment_renderer_id(), avail_size);
+        ImVec2 avail_size = ImGui::GetContentRegionAvail();
+        frame->resize(avail_size.x, avail_size.y);
+        frame->bind();
+        glClear(GL_COLOR_BUFFER_BIT);
+        frame->unbind();
+        ImGui::Image((void *)(intptr_t)frame->get_color_attachment_renderer_id(), avail_size);
     ImGui::End();
+    ImGui::PopStyleVar();
 }
 
 PH_NAMESPACE_END
