@@ -22,13 +22,14 @@ class Window
         std::string title;
         uint width;
         uint height;
+        std::string icon;
         glm::vec2 mouse_pos;
         bool maximized;
         EventCallbackFn event_callback;
     };
 
 public:
-    Window(std::string title, uint width, uint height);
+    Window(std::string title, uint width, uint height, std::string icon);
     ~Window();
 
     void update();
@@ -47,6 +48,7 @@ public:
     bool is_maximized() { return data.maximized; }
 
     void set_event_callback(const EventCallbackFn &callback) { data.event_callback = callback; }
+    void set_icon(std::string path);
 
 private:
     void init();

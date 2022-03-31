@@ -11,7 +11,7 @@
 class EditorApp : public ph::Application
 {
   public:
-    EditorApp() : ph::Application("Phantom Editor", 1280, 720)
+    EditorApp() : ph::Application("Phantom Editor", 1280, 720, "resources/icon/x32.png")
     {
         ImGuiIO& io = ImGui::GetIO();
         io.Fonts->AddFontFromFileTTF("resources/OpenSans.ttf", 16);

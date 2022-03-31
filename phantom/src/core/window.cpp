@@ -2,6 +2,8 @@
 #include <cmath>
 #include <renderer/renderer_api.h>
 
+#include "vendor/stb_image.h"
+
 PH_NAMESPACE_BEGIN
 
 uint Window::window_count = 0;
@@ -11,7 +13,7 @@ static void glfw_error_callback(int error, const char *description)
     Log::core_error("[glfw] ({0}): {1}", error, description);
 }
 
-Window::Window(std::string title, uint width, uint height) : data({title, width, height, {}, false})
+Window::Window(std::string title, uint width, uint height, std::string icon) : data({title, width, height, icon, {}, false})
 {
     init();
 }
@@ -58,6 +60,7 @@ void Window::init()
     glfwWindowHint(GLFW_MAXIMIZED, data.maximized);
 
     native_window = glfwCreateWindow(data.width, data.height, data.title.c_str(), nullptr, nullptr);
+    set_icon(data.icon);
 
     context = RenderContext::create(native_window);
     context->init();
@@ -157,6 +160,20 @@ void Window::init()
                                       WindowData *data = (WindowData *)glfwGetWindowUserPointer(window);
 
                                       data->maximized = maximized; });
+}
+
+void Window::set_icon(std::string path) {
+    int channels;
+    GLFWimage icons[1];
+    Log::core_info("Setting window icon: {}", path);
+    icons[0].pixels = stbi_load(path.c_str(), &icons[0].width, &icons[0].height, &channels, STBI_rgb_alpha); //rgba channels
+
+    if(icons[0].pixels == nullptr) {
+        Log::core_error("Failed to load icon from {}", path);
+    } else {
+        glfwSetWindowIcon(native_window, 1, icons);
+        stbi_image_free(icons[0].pixels);
+    }
 }
 
 PH_NAMESPACE_END

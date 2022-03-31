@@ -11,6 +11,7 @@ file(GLOB_RECURSE EDITOR_SRC
 
 add_executable(editor 
     ${EDITOR_SRC}
+    editor.rc
 )
 
 target_link_libraries(editor
