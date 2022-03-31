@@ -3,7 +3,7 @@
 #include "BootstrapIconsFont.h"
 #include "editor_layer.h"
 #include "scene_layer.h"
-// #include "panels/hierarchy_panel.h"
+#include "hierarchy_layer.h"
 
 #include <renderer/frame_buffer.h>
 
@@ -22,6 +22,7 @@ class EditorApp : public ph::Application
       impl_push_layer(new ph::EditorLayer());
 
       impl_push_layer(new ph::SceneLayer(scene));
+      impl_push_layer(new ph::HierarchyLayer(scene));
     };
     ~EditorApp() = default;
 
