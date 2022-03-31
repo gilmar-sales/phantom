@@ -18,6 +18,7 @@ target_link_libraries(editor
 )
 
 file(COPY resources DESTINATION ${CMAKE_BINARY_DIR}/editor)
+file(COPY imgui.ini DESTINATION ${CMAKE_BINARY_DIR}/editor)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
