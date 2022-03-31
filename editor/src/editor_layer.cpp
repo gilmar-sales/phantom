@@ -196,8 +196,7 @@ namespace ph
 
             ImGui::SetCursorPosX(ImGui::GetWindowContentRegionMax().x * 0.5f - 150);
 
-            ImGui::Text(ICON_BTSP_ACTIVITY " %s - %.3f ms/frame (%.1f FPS)", ph::Application::get()->get_name().c_str(), 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-
+            ImGui::Text("%s", "untitled");
 
             ImGui::EndMenuBar();
         }
