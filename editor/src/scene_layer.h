@@ -1,3 +1,6 @@
+#ifndef EDITOR_SCENE_LAYER_H
+#define EDITOR_SCENE_LAYER_H
+
 #include <core/layer.h>
 #include <scene/scene.h>
 #include <renderer/frame_buffer.h>
@@ -19,3 +22,5 @@ private:
 };
 
 PH_NAMESPACE_END
+
+#endif //EDITOR_SCENE_LAYER_H
