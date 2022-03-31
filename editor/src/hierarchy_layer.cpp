@@ -9,7 +9,7 @@
 
 PH_NAMESPACE_BEGIN
 
-HierarchyLayer::HierarchyLayer(shared<Scene> scene): scene(scene) {
+HierarchyLayer::HierarchyLayer(shared<Scene> scene): scene(scene), selectionContext(-1) {
     for (unsigned i = 0; i < 10; i++)
     {
         auto entity = scene->m_manager.create_entity();
@@ -37,7 +37,7 @@ void HierarchyLayer::on_gui_render() {
     scene->m_manager.for_each([&](auto entityID) { draw_entity_node(entityID); });
 
     // context menu
-    if (ImGui::BeginPopupContextWindow(0, 1, false))
+    if (ImGui::BeginPopupContextWindow(nullptr, 1, false))
     {
         if (ImGui::MenuItem("Empty entity"))
         {
@@ -90,7 +90,7 @@ void HierarchyLayer::draw_entity_node(unsigned int entity) {
     ImGuiTreeNodeFlags flags =
             ((selectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
     flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
-    bool opened = ImGui::TreeNodeEx((void *)(uint64_t)(uint32_t)entity, flags, tag.data());
+    bool opened = ImGui::TreeNodeEx((void *)(uint64_t)(uint32_t)entity, flags, "%s", tag.data());
     if (ImGui::IsItemClicked() | ImGui::IsItemClicked(1))
     {
         selectionContext = entity;
@@ -122,8 +122,8 @@ void HierarchyLayer::draw_entity_node(unsigned int entity) {
 
     if (opened)
     {
-        ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
-        bool opened = ImGui::TreeNodeEx((void *)9817239, flags, tag.data());
+        flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
+        opened = ImGui::TreeNodeEx((void *)9817239, flags, "Children");
         if (opened)
             ImGui::TreePop();
         ImGui::TreePop();
@@ -140,17 +140,17 @@ void HierarchyLayer::draw_entity_node(unsigned int entity) {
     void HierarchyLayer::draw_components() {
         if (scene->m_manager.has_component<TransformComponent>(selectionContext)) {
             auto& transform = scene->m_manager.get_component<TransformComponent>(selectionContext);
-            ImGui::Begin("Transform Component", nullptr, ImGuiWindowFlags_ChildWindow);
+
+            if(ImGui::CollapsingHeader("Transform Component", nullptr, ImGuiWindowFlags_ChildWindow)) {
                 ImGui::DragFloat3("Position", &transform.position[0], 0.1f);
                 ImGui::DragFloat4("Rotation", &transform.rotation[0], 0.1f);
                 ImGui::DragFloat3("Scale", &transform.scale[0], 0.1f);
-            ImGui::End();
+            }
         }
 
         if (scene->m_manager.has_component<MeshComponent>(selectionContext)) {
-            ImGui::Begin("Mesh Component", nullptr, ImGuiWindowFlags_ChildWindow);
-
-            ImGui::End();
+            if(ImGui::CollapsingHeader("Mesh Component", nullptr, ImGuiWindowFlags_ChildWindow)) {
+            }
         }
     }
 
