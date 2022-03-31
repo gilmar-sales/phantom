@@ -30,9 +30,10 @@ namespace ph
                         ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 
         static ImGuiIO &io = ImGui::GetIO();
-
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.0f, 0.0f});
         if (ImGui::Begin("DockSpace", nullptr, window_flags))
         {
+            ImGui::PopStyleVar();
             if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
             {
                 ImGuiID dockspace_id = ImGui::GetID("MainDockSpace");
@@ -42,9 +43,6 @@ namespace ph
             draw_titlebar();
 
             draw_menubar();
-
-            ImGui::Begin(ICON_BTSP_CONTROLLER" Game");
-            ImGui::End();
 
             ImGui::Begin(ICON_BTSP_ARCHIVE" Resources");
             ImGui::End();
@@ -210,12 +208,18 @@ namespace ph
             ImGui::Begin("Preferences ", &preferences_open,
                          ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_AlwaysAutoResize);
 
-            ToggleButton("Toggle dark mode", &m_enable_dark_theme);
-
-            if (m_enable_dark_theme)
-                StylePhantomDark();
-            else
-                StylePhantomLight();
+            static int style_idx = 0;
+            if (ImGui::Combo("Theme", &style_idx, "PhantomDark\0PhantomLight\0Dark\0Light\0Classic\0"))
+            {
+                switch (style_idx)
+                {
+                    case 0: StylePhantomDark(); break;
+                    case 1: StylePhantomLight(); break;
+                    case 2: ImGui::StyleColorsDark(); break;
+                    case 3: ImGui::StyleColorsLight(); break;
+                    case 4: ImGui::StyleColorsClassic(); break;
+                }
+            }
 
             ImGui::End();
         }
