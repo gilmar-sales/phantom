@@ -28,7 +28,7 @@ public:
     static shared<Window> get_window() { return get()->impl_get_window(); }
 
 protected:
-    Application(std::string name, uint width, uint height, std::string icon = "");
+    Application(std::string name, uint width, uint height, std::vector<std::string> icons = {});
 
     void impl_push_layer(Layer* layer);
     void impl_push_overlay(Layer* layer);
@@ -43,7 +43,7 @@ protected:
     std::string name;
     uint width;
     uint height;
-    std::string icon;
+    std::vector<std::string> icons;
 };
 
 PH_NAMESPACE_END

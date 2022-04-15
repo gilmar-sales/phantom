@@ -4,14 +4,14 @@
 
 PH_NAMESPACE_BEGIN
 
-Application:: Application(std::string name, uint width, uint height, std::string icon):
+Application:: Application(std::string name, uint width, uint height, std::vector<std::string> icons):
 name(name),
 width(width),
 height(height),
-icon(icon),
+icons(icons),
 windows(0) 
 {
-    windows.push_back(std::make_shared<Window>(name, width, height, icon));
+    windows.push_back(std::make_shared<Window>(name, width, height, icons));
 
     windows[0]->set_event_callback(BIND_EVENT_FN(on_event));
 
