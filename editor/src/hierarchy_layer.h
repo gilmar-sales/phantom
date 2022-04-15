@@ -25,6 +25,7 @@ public:
 private:
     shared<Scene> scene;
     unsigned selectionContext;
+    unsigned nodeToRename;
 };
 
 PH_NAMESPACE_END

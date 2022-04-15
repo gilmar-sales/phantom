@@ -1,4 +1,4 @@
-    //
+//
 // Created by gilmar on 30/03/2022.
 //
 
@@ -9,16 +9,15 @@
 
 PH_NAMESPACE_BEGIN
 
-HierarchyLayer::HierarchyLayer(shared<Scene> scene): scene(scene), selectionContext(-1) {
+HierarchyLayer::HierarchyLayer(shared<Scene> scene): scene(scene), selectionContext(-1), nodeToRename(-1) {
     for (unsigned i = 0; i < 10; i++)
     {
         auto entity = scene->m_manager.create_entity();
         std::stringstream entity_name;
-        entity_name << "Empty(" << i << ")";
+        entity_name << "Empty(" << entity << ")";
 
-        auto &name = scene->m_manager.add_component<NameComponent>(entity);
-        name = entity_name.str();
-        scene->m_manager.add_component<TransformComponent>(entity);
+        auto &name = scene->m_manager.add_component(entity, NameComponent{entity_name.str()});
+        scene->m_manager.add_component(entity, TransformComponent{});
     }
 }
 
@@ -30,8 +29,7 @@ void HierarchyLayer::on_gui_render() {
 
     if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
     {
-        selectionContext = 999999;
-        Log::core_trace("select entity {}", selectionContext);
+        selectionContext = -1;
     }
 
     scene->m_manager.for_each([&](auto entityID) { draw_entity_node(entityID); });
@@ -94,7 +92,26 @@ void HierarchyLayer::draw_entity_node(unsigned int entity) {
     if (ImGui::IsItemClicked() | ImGui::IsItemClicked(1))
     {
         selectionContext = entity;
-        Log::core_info("select entity {}", selectionContext);
+    }
+
+    if (nodeToRename == entity)
+    {
+        ImGui::SameLine();
+
+        std::string buffer = std::string(tag.data());
+        if (ImGui::InputText("###rename", buffer.data(), buffer.size(), ImGuiInputTextFlags_AutoSelectAll))
+        {
+            scene->m_manager.get_component<NameComponent>(entity).name = buffer;
+        }
+
+        if (ImGui::IsItemFocused())
+        {
+            ImGui::SetKeyboardFocusHere();
+        }
+        else
+        {
+            nodeToRename = -1;
+        }
     }
 
     bool entityDeleted = false;
@@ -102,8 +119,11 @@ void HierarchyLayer::draw_entity_node(unsigned int entity) {
     {
         auto& name = scene->m_manager.get_component<NameComponent>(entity).name;
 
-        if (ImGui::MenuItem("Delete Entity"))
+        if (ImGui::MenuItem("Delete"))
             entityDeleted = true;
+
+        if (ImGui::MenuItem("Rename..."))
+            nodeToRename = entity;
 
         if (ImGui::MenuItem("Add transform"))
         {
