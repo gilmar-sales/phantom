@@ -5,7 +5,7 @@
 
 <p align="center">
 <a href="#"><img src="https://img.shields.io/github/downloads/gilmarxd/phantom/latest/total" alt="Downloads"></a>
-<a href="#"><img src="https://img.shields.io/github/license/gilmarxd/phantom" alt="Package License" /></a>
+<a href="https://github.com/gilmarxd/phantom/blob/main/LICENSE"><img src="https://img.shields.io/github/license/gilmarxd/phantom" alt="Package License" /></a>
 <a href="#"><img src="https://img.shields.io/github/repo-size/gilmarxd/phantom" alt="Repo Size" /></a>
 <a href="#"><img src="https://img.shields.io/github/last-commit/gilmarxd/phantom" alt="Last Commmit"/></a>
 </p>
