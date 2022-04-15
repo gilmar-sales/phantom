@@ -16,12 +16,12 @@ public:
     PhysicsSystem() = default;
     ~PhysicsSystem() = default;
 
-    template<typename T>
-    void update(T& comps)
+    template<typename Settings>
+    void update(ecs::Manager<Settings>* manager)
     {
         for(ecs::EntityID entity : m_registered_entities)
         {
-            TransformComponent& transform = comps.template get_component<TransformComponent>(entity);
+            TransformComponent& transform = manager->template get_component<TransformComponent>(entity);
 
             if (transform.position.x > 100000) {
                 transform.position.x -= 1;

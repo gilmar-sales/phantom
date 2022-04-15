@@ -80,16 +80,16 @@ PH_NAMESPACE_BEGIN
 
         ~RenderSystem() = default;
 
-        template<typename T>
-        void update(T& comps)
+        template<typename Settings>
+        void update(ecs::Manager<Settings>* manager)
         {
             static glm::mat4 projection = glm::perspective(glm::radians(90.0f), (float)1280 / (float)720, 0.1f, 100.0f);
             static glm::mat4 view = glm::lookAt(glm::vec3(0,0,-5), glm::vec3(0, 0, 1), glm::vec3(0, 1, 0));
            
             for(ecs::EntityID entity : m_registered_entities)
             {
-                TransformComponent& transform = comps.template get_component<TransformComponent>(entity);
-                MeshComponent& mesh = comps.template get_component<MeshComponent>(entity);
+                TransformComponent& transform = manager->template get_component<TransformComponent>(entity);
+                MeshComponent& mesh = manager->template get_component<MeshComponent>(entity);
 
                 glm::mat4 model = glm::mat4(1.0f);
                 model = glm::translate(model, glm::vec3(0,0,5));
